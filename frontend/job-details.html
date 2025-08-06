@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .job-details-hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8fafc 60%, #e0e7ff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+        .job-details-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 8px 40px rgba(37, 99, 235, 0.10);
+            padding: 2.5rem 2.5rem 2rem 2.5rem;
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            animation: fadeInUp 0.7s cubic-bezier(.39,.575,.565,1) both;
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .job-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .job-icon.logo-only-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(37,99,235,0.10);
+            flex-shrink: 0;
+            padding: 0;
+        }
+        .company-name-detail {
+            display: block;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 0.2rem;
+            letter-spacing: 0.2px;
+        }
+        .job-header-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .job-title-detail {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.3rem;
+        }
+        .job-meta {
+            color: #64748b;
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+        .job-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .job-info-item {
+            color: #334155;
+            font-size: 1.05rem;
+        }
+        .job-info-item .label {
+            color: #64748b;
+            font-weight: 600;
+            margin-right: 0.3rem;
+        }
+        .job-description-block {
+            background: #f1f5f9;
+            border-radius: 10px;
+            padding: 1.2rem 1.2rem 1.2rem 1.2rem;
+            margin-bottom: 2rem;
+            color: #334155;
+            font-size: 1.08rem;
+        }
+        .job-description-block .label {
+            color: #2563eb;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .apply-btn {
+            width: 100%;
+            padding: 1rem 0;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(37,99,235,0.15);
+            margin-bottom: 1.2rem;
+            transition: background 0.2s, transform 0.2s;
+            letter-spacing: 0.5px;
+        }
+        .apply-btn:hover {
+            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 8px 32px rgba(37,99,235,0.18);
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: color 0.2s;
+        }
+        .back-link:hover {
+            color: #ff6f61;
+            text-decoration: underline;
+        }
+        .inline-company-logo {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #f8fafc;
+            box-shadow: 0 1px 6px rgba(30,41,59,0.07);
+            margin: 0;
+            display: block;
+        }
+        #login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.4);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #login-modal .modal-card {
+            background: #fff;
+            padding: 2rem 2.5rem;
+            border-radius: 16px;
+            max-width: 350px;
+            width: 90%;
+            box-shadow: 0 8px 32px rgba(37,99,235,0.18);
+            position: relative;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #close-login-modal {
+            position:absolute;
+            top:10px;right:10px;
+            background:none;
+            border:none;
+            font-size:1.2rem;
+            cursor:pointer;
+            color:#64748b;
+            transition: color 0.2s;
+        }
+        #close-login-modal:hover {
+            color:#2563eb;
+        }
+        #login-modal h3 {
+            margin-top:0;
+            color:#2563eb;
+            font-size:1.3rem;
+            font-weight:700;
+            letter-spacing:0.2px;
+        }
+        #login-form label {
+            display:block;
+            margin-bottom:0.3rem;
+            color:#374151;
+            font-weight:500;
+        }
+        #login-form input {
+            width:100%;
+            padding:0.5rem;
+            border-radius:8px;
+            border:1px solid #cbd5e1;
+            font-size:1rem;
+            margin-bottom:0.7rem;
+            transition: border-color 0.2s;
+        }
+        #login-form input:focus {
+            border-color:#2563eb;
+            outline:none;
+        }
+        #login-form button[type="submit"] {
+            width:100%;
+            padding:0.7rem;
+            background:linear-gradient(135deg, #2563eb, #3b82f6);
+            color:#fff;
+            border:none;
+            border-radius:8px;
+            font-size:1rem;
+            font-weight:600;
+            cursor:pointer;
+            margin-top:0.5rem;
+            transition: background 0.2s;
+        }
+        #login-form button[type="submit"]:hover {
+            background:linear-gradient(135deg, #1d4ed8, #2563eb);
+        }
+    </style>
+</head>
+<body>
+    <div class="job-details-hero">
+        <div class="job-details-card">
+            <div class="job-header">
+                <div class="job-icon logo-only-icon">
+                    <img id="company-logo" class="inline-company-logo" src="" alt="Logo" />
+                </div>
+                <div class="job-header-content">
+                    <span class="company-name-detail" id="company-name"></span>
+                    <span class="job-meta" id="job-location"></span>
+                </div>
+            </div>
+            <div class="job-title-detail" id="job-title"></div>
+            <div class="job-info-grid">
+                <div class="job-info-item"><span class="label">Role:</span> <span id="job-role"></span></div>
+                <div class="job-info-item"><span class="label">Industry:</span> <span id="job-industry"></span></div>
+                <div class="job-info-item"><span class="label">Flexibility:</span> <span id="job-flexibility"></span></div>
+                <div class="job-info-item"><span class="label">Stipend:</span> <span id="job-stipend"></span></div>
+                <div class="job-info-item"><span class="label">Work Hours:</span> <span id="job-work-hours"></span></div>
+                <div class="job-info-item"><span class="label">Reallocation Bonus:</span> <span id="job-reallocation-bonus"></span></div>
+                <div class="job-info-item"><span class="label">Contact:</span> <span id="job-contact"></span></div>
+            </div>
+            <div class="job-description-block">
+                <span class="label">Description:</span>
+                <span id="job-description"></span>
+            </div>
+            <div id="error-message" style="color: red; font-weight: bold; margin-bottom: 1rem;"></div>
+            <button id="apply-btn" class="apply-btn">Apply</button>
+            <div id="login-modal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);z-index:1000;align-items:center;justify-content:center;display:none;">
+                <div class="modal-card">
+                    <button id="close-login-modal" style="position:absolute;top:10px;right:10px;background:none;border:none;font-size:1.2rem;cursor:pointer;">&times;</button>
+                    <h3 style="margin-top:0;color:#2563eb;">Sign In</h3>
+                    <form id="login-form">
+                        <div style="margin-bottom:1rem;">
+                            <label for="login-username" style="display:block;margin-bottom:0.3rem;">Username</label>
+                            <div style="position:relative;">
+                                <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:1.1em;"><i class="fas fa-user"></i></span>
+                                <input type="text" id="login-username" required placeholder="Enter your username" style="width:100%;padding:0.5rem 0.5rem 0.5rem 2.2rem;border-radius:6px;border:1px solid #ccc;">
+                            </div>
+                            <div id="username-error" style="color:red;font-size:0.95rem;display:none;margin-top:0.3rem;"></div>
+                        </div>
+                        <div style="margin-bottom:1.2rem;">
+                            <label for="login-password" style="display:block;margin-bottom:0.3rem;">Password</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="login-password" required placeholder="Enter your password" style="width:100%;padding:0.5rem 0.5rem 0.5rem 2.2rem;border-radius:6px;border:1px solid #ccc;">
+                            </div>
+                        </div>
+                        <div style="text-align:center;margin-bottom:0.7rem;">
+                            <a href="#" id="show-register" style="color:#2563eb;text-decoration:none;font-weight:500;cursor:pointer;">Don't have an account? Sign up</a>
+                        </div>
+                        <button type="submit" style="width:100%;padding:0.7rem;background:linear-gradient(135deg, #2563eb, #3b82f6);color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer;">Sign In</button>
+                    </form>
+                    <form id="register-form" style="display:none;">
+                        <div style="margin-bottom:1rem;">
+                            <label for="register-username" style="display:block;margin-bottom:0.3rem;">Username</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="register-username" required placeholder="Choose a username" style="width:100%;padding:0.5rem 0.5rem 0.5rem 2.2rem;border-radius:6px;border:1px solid #ccc;">
+                            </div>
+                            <div id="register-username-error" style="color:red;font-size:0.95rem;display:none;margin-top:0.3rem;"></div>
+                        </div>
+                        <div style="margin-bottom:1rem;">
+                            <label for="register-email" style="display:block;margin-bottom:0.3rem;">Email Address</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="register-email" required placeholder="Enter your email" style="width:100%;padding:0.5rem 0.5rem 0.5rem 2.2rem;border-radius:6px;border:1px solid #ccc;">
+                            </div>
+                            <div id="register-email-error" style="color:red;font-size:0.95rem;display:none;margin-top:0.3rem;"></div>
+                        </div>
+                        <div style="margin-bottom:1.2rem;">
+                            <label for="register-password" style="display:block;margin-bottom:0.3rem;">Password</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="register-password" required placeholder="Create a password" style="width:100%;padding:0.5rem 0.5rem 0.5rem 2.2rem;border-radius:6px;border:1px solid #ccc;">
+                            </div>
+                        </div>
+                        <div style="text-align:center;margin-bottom:0.7rem;">
+                            <a href="#" id="show-login" style="color:#2563eb;text-decoration:none;font-weight:500;cursor:pointer;">Already have an account? Sign in</a>
+                        </div>
+                        <button type="submit" style="width:100%;padding:0.7rem;background:linear-gradient(135deg, #2563eb, #3b82f6);color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer;">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+            <a href="index.html" class="back-link">&#8592; Back to Jobs</a>
+            <!-- Removed logout button -->
+        </div>
+    </div>
+    <!-- Success Modal -->
+    <div id="success-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.25);z-index:2000;align-items:center;justify-content:center;">
+        <div style="background:#fff;padding:2rem 2.5rem;border-radius:16px;box-shadow:0 8px 32px rgba(37,99,235,0.18);display:flex;flex-direction:column;align-items:center;max-width:320px;width:90%;">
+            <span style="font-size:2.2rem;color:#22c55e;margin-bottom:0.7rem;"><i class='fas fa-check-circle'></i></span>
+            <div id="success-modal-message" style="font-size:1.15rem;font-weight:600;color:#2563eb;margin-bottom:1.2rem;text-align:center;">Successfully applied</div>
+            <button id="close-success-modal" style="background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;border:none;border-radius:8px;padding:0.6rem 1.5rem;font-size:1rem;font-weight:600;cursor:pointer;">OK</button>
+        </div>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const showError = (msg) => {
+            const errDiv = document.getElementById('error-message');
+            if (errDiv) errDiv.textContent = msg;
+        };
+        try {
+            function getParam(name) {
+                const url = new URL(window.location.href);
+                const value = url.searchParams.get(name) || '';
+                // Handle stipend and reallocation_bonus - return empty if no value
+                if ((name === 'stipend' || name === 'reallocation_bonus') && (!value || value === '?')) {
+                    return '';
+                }
+                return value;
+            }
+            // Set logo (use logo param or fallback)
+            const logoUrl = getParam('logo') || 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg';
+            const logoImg = document.getElementById('company-logo');
+            if (logoImg) logoImg.src = logoUrl;
+            // Set company name
+            const companyName = getParam('name');
+            const companyNameEl = document.getElementById('company-name');
+            if (companyNameEl) companyNameEl.textContent = companyName;
+            // Set job title
+            const jobTitle = getParam('role');
+            const jobTitleEl = document.getElementById('job-title');
+            if (jobTitleEl) jobTitleEl.textContent = jobTitle;
+            // Set other fields
+            const setText = (id, value) => {
+                const el = document.getElementById(id);
+                if (el) {
+                                    // Additional protection against invalid values
+                if (value === '?' || value === 'undefined' || value === 'null' || !value) {
+                    el.textContent = '';
+                } else {
+                    el.textContent = value;
+                }
+                }
+            };
+            setText('job-role', getParam('role'));
+            setText('job-industry', getParam('industry'));
+            setText('job-location', getParam('location'));
+            setText('job-flexibility', getParam('flexibility'));
+            setText('job-description', getParam('job_description'));
+            setText('job-stipend', getParam('stipend'));
+            setText('job-work-hours', getParam('work_hours'));
+            setText('job-reallocation-bonus', getParam('reallocation_bonus'));
+            setText('job-contact', getParam('contact_number'));
+
+            const applyBtn = document.getElementById('apply-btn');
+            if (applyBtn) {
+                applyBtn.onclick = function() {
+                    if (localStorage.getItem('jobportal_username')) {
+                        // User is signed in, show success modal
+                        const successModal = document.getElementById('success-modal');
+                        if (successModal) {
+                            successModal.style.display = 'flex';
+                            // Auto-close after 2 seconds
+                            const timeout = setTimeout(() => { successModal.style.display = 'none'; }, 2000);
+                            document.getElementById('close-success-modal').onclick = function() {
+                                successModal.style.display = 'none';
+                                clearTimeout(timeout);
+                            };
+                        }
+                    } else {
+                        // Not signed in, show login modal
+                        document.getElementById('login-modal').style.display = 'flex';
+                        // After successful login, show success modal
+                        const loginForm = document.getElementById('login-form');
+                        if (loginForm) {
+                            loginForm.onsubmit = function(e) {
+                                e.preventDefault();
+                                var username = document.getElementById('login-username').value.trim();
+                                var errorDiv = document.getElementById('username-error');
+                                if (!username) {
+                                    errorDiv.textContent = 'Username is required.';
+                                    errorDiv.style.display = 'block';
+                                    return;
+                                } else {
+                                    errorDiv.style.display = 'none';
+                                }
+                                document.getElementById('login-modal').style.display = 'none';
+                                localStorage.setItem('jobportal_username', username);
+                                const successModal = document.getElementById('success-modal');
+                                if (successModal) {
+                                    successModal.style.display = 'flex';
+                                    // Auto-close after 2 seconds
+                                    const timeout = setTimeout(() => { successModal.style.display = 'none'; }, 2000);
+                                    document.getElementById('close-success-modal').onclick = function() {
+                                        successModal.style.display = 'none';
+                                        clearTimeout(timeout);
+                                    };
+                                }
+                            };
+                        }
+                    }
+                };
+            }
+            const closeLoginModal = document.getElementById('close-login-modal');
+            if (closeLoginModal) {
+                closeLoginModal.onclick = function() {
+                    document.getElementById('login-modal').style.display = 'none';
+                };
+            }
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) {
+                loginForm.onsubmit = function(e) {
+                    e.preventDefault();
+                    var username = document.getElementById('login-username').value.trim();
+                    var errorDiv = document.getElementById('username-error');
+                    if (!username) {
+                        errorDiv.textContent = 'Username is required.';
+                        errorDiv.style.display = 'block';
+                        return;
+                    } else {
+                        errorDiv.style.display = 'none';
+                    }
+                    document.getElementById('login-modal').style.display = 'none';
+                    localStorage.setItem('jobportal_username', username);
+                    const successModal = document.getElementById('success-modal');
+                    if (successModal) {
+                        successModal.style.display = 'flex';
+                        // Auto-close after 2 seconds
+                        const timeout = setTimeout(() => { successModal.style.display = 'none'; }, 2000);
+                        document.getElementById('close-success-modal').onclick = function() {
+                            successModal.style.display = 'none';
+                            clearTimeout(timeout);
+                        };
+                    }
+                };
+            }
+            const showRegister = document.getElementById('show-register');
+            const showLogin = document.getElementById('show-login');
+            const loginFormEl = document.getElementById('login-form');
+            const registerFormEl = document.getElementById('register-form');
+            if (showRegister && showLogin && loginFormEl && registerFormEl) {
+                showRegister.onclick = function(e) {
+                    e.preventDefault();
+                    loginFormEl.style.display = 'none';
+                    registerFormEl.style.display = 'block';
+                };
+                showLogin.onclick = function(e) {
+                    e.preventDefault();
+                    registerFormEl.style.display = 'none';
+                    loginFormEl.style.display = 'block';
+                };
+            }
+            registerFormEl.onsubmit = function(e) {
+                e.preventDefault();
+                var username = document.getElementById('register-username').value.trim();
+                // ... validation ...
+                // On success:
+                localStorage.setItem('jobportal_username', username);
+                // ... existing code ...
+            }
+            // Logout button logic
+            const logoutBtn = document.getElementById('logout-btn');
+            if (localStorage.getItem('jobportal_username')) {
+                if (logoutBtn) logoutBtn.style.display = 'inline-block';
+            } else {
+                if (logoutBtn) logoutBtn.style.display = 'none';
+            }
+            if (logoutBtn) {
+                logoutBtn.onclick = function() {
+                    localStorage.removeItem('jobportal_username');
+                    location.reload();
+                };
+            }
+        } catch (err) {
+            showError('JavaScript error: ' + err.message);
+        }
+    });
+    </script>
+</body>
+</html> 

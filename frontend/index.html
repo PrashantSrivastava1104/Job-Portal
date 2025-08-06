@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobPortal - Find Your Dream Career</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .input-wrapper {
+            position: relative;
+        }
+        .input-wrapper i {
+            position: absolute;
+            left: 0.8em;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 1.1em;
+            pointer-events: none;
+        }
+        .input-wrapper input {
+            padding-left: 2.2em !important;
+        }
+        .filter-group select option[value=""] {
+            color: #9ca3af;
+            font-style: italic;
+        }
+        
+        .filter-group select {
+            color: #374151;
+        }
+        
+        .filter-group select:invalid {
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-briefcase"></i>
+                <span>JobPortal</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#companies" class="nav-link">Companies</a>
+                <a href="#jobs" class="nav-link" id="jobs-link">Jobs</a>
+                <a href="#about" class="nav-link">About</a>
+                <span id="welcome-user" style="display:none;font-weight:600;color:#2563eb;margin-right:1rem;"></span>
+                <button id="logout-btn" class="btn-primary" style="display:none;margin-right:0.5rem;">Logout</button>
+                <button class="nav-btn-primary" id="login-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign In
+                </button>
+            </div>
+            <div class="nav-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Find Your <span class="highlight">Dream Job</span> Today
+                </h1>
+                <p class="hero-subtitle">
+                    Connect with top companies and discover opportunities that match your skills and aspirations. 
+                    Start your career journey with JobPortal.
+                </p>
+                <div class="hero-search">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="search" placeholder="Job title, keywords, or company...">
+                        <button class="filter-btn" id="open-filter-btn-hero" style="background: linear-gradient(135deg, #f1f5f9, #e2e8f0); color: #475569; border: 1px solid #cbd5e1; padding: 12px; border-radius: 10px; cursor: pointer; margin-right: 8px; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: relative; overflow: hidden;">
+                            <i class="fas fa-filter" style="font-size: 14px; font-weight: 600;"></i>
+                            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(147,51,234,0.1)); opacity: 0; transition: opacity 0.3s ease;"></div>
+                        </button>
+                        <button class="search-btn" onclick="searchJobs()">
+                            <i class="fas fa-search"></i>
+                            Search Jobs
+                        </button>
+                    </div>
+                    <div class="search-tags">
+                        <span class="tag">Software Engineer</span>
+                        <span class="tag">Marketing Manager</span>
+                        <span class="tag">Data Analyst</span>
+                        <span class="tag">Product Designer</span>
+                    </div>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">50K+</span>
+                        <span class="stat-label">Active Jobs</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Companies</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">1M+</span>
+                        <span class="stat-label">Job Seekers</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="floating-card card-1">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Remote Work</span>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Career Growth</span>
+                </div>
+                <div class="floating-card card-3">
+                    <i class="fas fa-users"></i>
+                    <span>Team Culture</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose JobPortal?</h2>
+                <p>We provide the tools and resources you need to succeed in your career</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Quick Apply</h3>
+                    <p>Apply to multiple jobs with just one click using your saved profile</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Verified Jobs</h3>
+                    <p>All job postings are verified and from legitimate companies</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Smart Alerts</h3>
+                    <p>Get notified about new opportunities that match your preferences</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Career Insights</h3>
+                    <p>Access salary data and career trends to make informed decisions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Companies Section -->
+    <section class="companies" id="companies">
+        <div class="container">
+            <div class="section-header">
+                <h2>Top Companies Hiring</h2>
+                <p>Discover opportunities from leading companies across various industries</p>
+            </div>
+            <div class="companies-grid" id="companies-list">
+                <!-- Companies will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Jobs Section -->
+    <section class="featured-jobs" id="jobs">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Opportunities</h2>
+                <p>Discover the latest job openings from top companies</p>
+            </div>
+            <div class="jobs-controls">
+                <div class="jobs-controls-left">
+                    <button id="open-filter-btn" class="filter-btn">
+                        <i class="fas fa-filter"></i>
+                        Filter Jobs
+                    </button>
+                    <div class="filter-summary" id="filter-summary" style="display: none;">
+                        <span class="filter-summary-text">Active filters:</span>
+                        <div class="filter-summary-tags" id="filter-summary-tags"></div>
+                        <button class="clear-filters-btn" id="clear-filters-summary">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                    </div>
+                </div>
+                <div class="jobs-controls-right">
+                    <div class="results-count" id="results-count">
+                        <span id="results-number">0</span> jobs found
+                    </div>
+                </div>
+            </div>
+            <div id="jobs-list" class="jobs-grid">
+                <!-- Jobs will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>About JobPortal</h2>
+                <p>Connecting talented professionals with amazing opportunities worldwide</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Our Mission</h3>
+                    <p>At JobPortal, we believe that everyone deserves to find a job they love. Our platform connects talented professionals with innovative companies, making the job search process seamless and efficient.</p>
+                    
+                    <h3>What We Offer</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Verified job postings from legitimate companies</li>
+                        <li><i class="fas fa-check"></i> Advanced search and filtering capabilities</li>
+                        <li><i class="fas fa-check"></i> One-click application process</li>
+                        <li><i class="fas fa-check"></i> Career insights and salary data</li>
+                        <li><i class="fas fa-check"></i> Mobile-friendly platform</li>
+                        <li><i class="fas fa-check"></i> 24/7 customer support</li>
+                    </ul>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h4>1M+</h4>
+                            <p>Active Users</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h4>50K+</h4>
+                            <p>Job Postings</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h4>10K+</h4>
+                            <p>Companies</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h4>4.8</h4>
+                            <p>User Rating</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Start Your Career Journey?</h2>
+                <p>Join thousands of professionals who found their dream jobs through JobPortal</p>
+                <button class="cta-btn" id="cta-login-btn">
+                    <i class="fas fa-user-plus"></i>
+                    Create Account
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-briefcase"></i>
+                        <span>JobPortal</span>
+                    </div>
+                    <p>Connecting talented professionals with amazing opportunities worldwide.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>For Job Seekers</h4>
+                    <ul>
+                        <li><a href="#">Browse Jobs</a></li>
+                        <li><a href="#">Career Advice</a></li>
+                        <li><a href="#">Salary Guide</a></li>
+                        <li><a href="#">Resume Builder</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>For Employers</h4>
+                    <ul>
+                        <li><a href="#">Post a Job</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Recruitment Tools</a></li>
+                        <li><a href="#">Company Profiles</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 JobPortal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <button id="close-login-modal" class="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h3>Welcome Back</h3>
+                <p>Sign in to access your account</p>
+            </div>
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="login-username">Username</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="login-username" required placeholder="Enter your username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="login-password" required placeholder="Enter your password">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <a href="#" id="show-register" class="link-text">Don't have an account? Sign up</a>
+                </div>
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign In
+                </button>
+            </form>
+            <form id="register-form" class="auth-form" style="display:none;">
+                <div class="form-group">
+                    <label for="register-username">Username</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="register-username" required placeholder="Choose a username">
+                    </div>
+                    <div id="register-username-error" class="error-message"></div>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="register-email" required placeholder="Enter your email">
+                    </div>
+                    <div id="register-email-error" class="error-message"></div>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="register-password" required placeholder="Create a password">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <a href="#" id="show-login" class="link-text">Already have an account? Sign in</a>
+                </div>
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-user-plus"></i>
+                    Create Account
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Enhanced Filter Modal -->
+    <div id="filter-modal" class="modal">
+        <div class="modal-content filter-modal">
+            <button id="close-filter-modal" class="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h3><i class="fas fa-filter"></i> Advanced Job Filters</h3>
+                <p>Refine your search with powerful filtering options</p>
+            </div>
+            
+            <!-- Filter Presets -->
+            <div class="filter-presets">
+                <h4>Quick Filters</h4>
+                <div class="preset-tags">
+                    <button class="preset-tag" data-preset="remote">
+                        <i class="fas fa-home"></i> Remote Only
+                    </button>
+                    <button class="preset-tag" data-preset="high-salary">
+                        <i class="fas fa-dollar-sign"></i> High Salary
+                    </button>
+                    <button class="preset-tag" data-preset="tech">
+                        <i class="fas fa-laptop-code"></i> Tech Jobs
+                    </button>
+                    <button class="preset-tag" data-preset="entry-level">
+                        <i class="fas fa-graduation-cap"></i> Entry Level
+                    </button>
+                    <button class="preset-tag" data-preset="part-time">
+                        <i class="fas fa-clock"></i> Part Time
+                    </button>
+                </div>
+            </div>
+
+            <!-- Active Filters Summary -->
+            <div class="active-filters" id="active-filters" style="display: none;">
+                <h4>Active Filters</h4>
+                <div class="active-filter-tags" id="active-filter-tags"></div>
+                <button class="clear-all-filters" id="clear-all-filters">
+                    <i class="fas fa-times"></i> Clear All
+                </button>
+            </div>
+
+            <div class="filter-content">
+                <!-- Basic Filters -->
+                <div class="filter-section">
+                    <h4><i class="fas fa-cog"></i> Basic Filters</h4>
+                    <div class="filter-grid">
+                        <div class="filter-group">
+                            <label for="filter-flexibility">Work Flexibility</label>
+                            <select id="filter-flexibility">
+                                <option value="">All Types</option>
+                                <option value="online">Online</option>
+                                <option value="offline">Offline</option>
+                                <option value="both">Both</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-location">Location Type</label>
+                            <select id="filter-location">
+                                <option value="">All Locations</option>
+                                <option value="remote">Remote</option>
+                                <option value="office">Office</option>
+                                <option value="hybrid">Hybrid</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-role">Job Role</label>
+                            <select id="filter-role">
+                                <option value="">All Roles</option>
+                                <option value="software-engineer">Software Engineer</option>
+                                <option value="product-manager">Product Manager</option>
+                                <option value="data-scientist">Data Scientist</option>
+                                <option value="designer">Designer</option>
+                                <option value="marketing">Marketing</option>
+                                <option value="sales">Sales</option>
+                                <option value="hr">Human Resources</option>
+                                <option value="finance">Finance</option>
+                                <option value="operations">Operations</option>
+                                <option value="customer-support">Customer Support</option>
+                                <option value="content-writer">Content Writer</option>
+                                <option value="analyst">Business Analyst</option>
+                                <option value="qa-engineer">QA Engineer</option>
+                                <option value="devops">DevOps Engineer</option>
+                                <option value="ui-ux">UI/UX Designer</option>
+                                <option value="mobile-developer">Mobile Developer</option>
+                                <option value="frontend-developer">Frontend Developer</option>
+                                <option value="backend-developer">Backend Developer</option>
+                                <option value="fullstack-developer">Full Stack Developer</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-company">Company</label>
+                            <select id="filter-company">
+                                <option value="">All Companies</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Salary & Benefits -->
+                <div class="filter-section">
+                    <h4><i class="fas fa-dollar-sign"></i> Salary & Benefits</h4>
+                    <div class="filter-grid">
+                        <div class="filter-group">
+                            <label for="filter-stipend">Minimum Salary</label>
+                            <div class="range-wrapper">
+                                <input type="range" id="filter-stipend" min="0" max="100000" step="1000" value="0">
+                                <div class="range-labels">
+                                    <span>$0</span>
+                                    <span id="stipend-value" class="range-value">$0</span>
+                                    <span>$100K+</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-work-hours">Work Hours (per week)</label>
+                            <div class="range-wrapper">
+                                <input type="range" id="filter-work-hours" min="0" max="80" step="1" value="0">
+                                <div class="range-labels">
+                                    <span>0h</span>
+                                    <span id="work-hours-value" class="range-value">0 hours</span>
+                                    <span>80h</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Filters -->
+                <div class="filter-section">
+                    <h4><i class="fas fa-sliders-h"></i> Advanced Filters</h4>
+                    <div class="filter-grid">
+                        <div class="filter-group">
+                            <label for="filter-experience">Experience Level</label>
+                            <select id="filter-experience">
+                                <option value="">All Levels</option>
+                                <option value="entry">Entry Level</option>
+                                <option value="mid">Mid Level</option>
+                                <option value="senior">Senior Level</option>
+                                <option value="lead">Lead/Manager</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-employment-type">Employment Type</label>
+                            <select id="filter-employment-type">
+                                <option value="">All Types</option>
+                                <option value="full-time">Full Time</option>
+                                <option value="part-time">Part Time</option>
+                                <option value="contract">Contract</option>
+                                <option value="internship">Internship</option>
+                                <option value="freelance">Freelance</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-benefits">Benefits</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="filter-health-insurance" value="health-insurance">
+                                    <span class="checkmark"></span>
+                                    Health Insurance
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="filter-remote-work" value="remote-work">
+                                    <span class="checkmark"></span>
+                                    Remote Work
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="filter-flexible-hours" value="flexible-hours">
+                                    <span class="checkmark"></span>
+                                    Flexible Hours
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="filter-professional-development" value="professional-development">
+                                    <span class="checkmark"></span>
+                                    Professional Development
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sort Options -->
+                <div class="filter-section">
+                    <h4><i class="fas fa-sort"></i> Sort Results</h4>
+                    <div class="filter-group">
+                        <label for="filter-sort">Sort By</label>
+                        <select id="filter-sort">
+                            <option value="relevance">Relevance</option>
+                            <option value="salary-high">Salary (High to Low)</option>
+                            <option value="salary-low">Salary (Low to High)</option>
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-actions">
+                <div class="filter-actions-left">
+                    <button id="save-filter-preset" class="btn-secondary">
+                        <i class="fas fa-bookmark"></i>
+                        Save Preset
+                    </button>
+                    <button id="reset-filters" class="btn-secondary">
+                        <i class="fas fa-undo"></i>
+                        Reset
+                    </button>
+                </div>
+                <div class="filter-actions-right">
+                    <button id="apply-filters" class="btn-primary">
+                        <i class="fas fa-check"></i>
+                        Apply Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal" style="display:none;align-items:center;justify-content:center;z-index:3000;">
+        <div class="modal-content" style="text-align:center;max-width:350px;">
+            <span id="success-modal-icon" style="font-size:2.2rem;color:#22c55e;margin-bottom:0.7rem;"><i class='fas fa-check-circle'></i></span>
+            <div id="success-modal-message" style="font-size:1.15rem;font-weight:600;color:#2563eb;margin-bottom:1.2rem;text-align:center;">Success</div>
+            <button id="close-success-modal" class="btn-primary" style="padding:0.6rem 1.5rem;font-size:1rem;font-weight:600;">OK</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+
+        // Login modal functionality
+        document.getElementById('login-btn').onclick = function() {
+            document.getElementById('login-modal').style.display = 'flex';
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('register-form').style.display = 'none';
+        };
+
+        document.getElementById('cta-login-btn').onclick = function() {
+            document.getElementById('login-modal').style.display = 'flex';
+            document.getElementById('register-form').style.display = 'block';
+            document.getElementById('login-form').style.display = 'none';
+        };
+
+        document.getElementById('close-login-modal').onclick = function() {
+            document.getElementById('login-modal').style.display = 'none';
+        };
+
+        // Close modal when clicking outside
+        document.getElementById('login-modal').onclick = function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        };
+
+        // Registration form submission
+        document.getElementById('register-form').onsubmit = async function(e) {
+            e.preventDefault();
+            const username = document.getElementById('register-username').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const password = document.getElementById('register-password').value.trim();
+            const usernameError = document.getElementById('register-username-error');
+            const emailError = document.getElementById('register-email-error');
+            usernameError.style.display = 'none';
+            emailError.style.display = 'none';
+            // Basic validation
+            if (!username) {
+                usernameError.textContent = 'Username is required.';
+                usernameError.style.display = 'block';
+                return;
+            }
+            if (!email) {
+                emailError.textContent = 'Email is required.';
+                emailError.style.display = 'block';
+                return;
+            }
+            // Email domain validation
+            var allowedDomains = ['@gmail.com', '@yahoo.com', '@outlook.com', '@hotmail.com'];
+            var valid = allowedDomains.some(domain => email.endsWith(domain));
+            if (!valid) {
+                emailError.textContent = 'Please use a valid Gmail, Yahoo, Outlook, or Hotmail address.';
+                emailError.style.display = 'block';
+                return;
+            }
+            // Send registration request
+            try {
+                const res = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    if (data.field === 'username') {
+                        usernameError.textContent = data.error;
+                        usernameError.style.display = 'block';
+                    } else if (data.field === 'email') {
+                        emailError.textContent = data.error;
+                        emailError.style.display = 'block';
+                    } else if (data.error) {
+                        emailError.textContent = data.error;
+                        emailError.style.display = 'block';
+                    }
+                    return;
+                }
+                // Use the username from the form or response, with fallback
+                const displayUsername = data.username || username || 'User';
+                document.getElementById('welcome-user').textContent = 'Welcome, ' + displayUsername;
+                document.getElementById('welcome-user').style.display = 'inline-block';
+                document.getElementById('login-btn').style.display = 'none';
+                document.getElementById('login-modal').style.display = 'none';
+                // Store username in localStorage for persistence
+                localStorage.setItem('jobportal_username', displayUsername);
+                // Show success modal
+                document.getElementById('success-modal-message').textContent = 'Successfully signed up';
+                document.getElementById('success-modal').style.display = 'flex';
+                const closeModal2 = () => { document.getElementById('success-modal').style.display = 'none'; };
+                const timeout2 = setTimeout(closeModal2, 2000);
+                document.getElementById('close-success-modal').onclick = function() { closeModal2(); clearTimeout(timeout2); };
+            } catch (err) {
+                emailError.textContent = 'Registration failed. Please try again.';
+                emailError.style.display = 'block';
+            }
+        };
+
+        // Login form submission
+        document.getElementById('login-form').onsubmit = async function(e) {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            let usernameError = document.getElementById('login-username-error');
+            let passwordError = document.getElementById('login-password-error');
+            if (!usernameError) {
+                usernameError = document.createElement('div');
+                usernameError.id = 'login-username-error';
+                usernameError.className = 'error-message';
+                document.getElementById('login-form').insertBefore(usernameError, document.getElementById('login-form').children[1]);
+            }
+            if (!passwordError) {
+                passwordError = document.createElement('div');
+                passwordError.id = 'login-password-error';
+                passwordError.className = 'error-message';
+                document.getElementById('login-form').insertBefore(passwordError, document.getElementById('login-form').children[2]);
+            }
+            usernameError.style.display = 'none';
+            passwordError.style.display = 'none';
+            if (!username) {
+                usernameError.textContent = 'Username is required.';
+                usernameError.style.display = 'block';
+                return;
+            }
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    if (data.field === 'username') {
+                        usernameError.textContent = data.error;
+                        usernameError.style.display = 'block';
+                    } else if (data.field === 'password') {
+                        passwordError.textContent = data.error;
+                        passwordError.style.display = 'block';
+                    } else {
+                        usernameError.textContent = data.error || 'Invalid username or password.';
+                        usernameError.style.display = 'block';
+                    }
+                    return;
+                }
+                // Use the username from the form or response, with fallback
+                const displayUsername = data.username || username || 'User';
+                document.getElementById('welcome-user').textContent = 'Welcome, ' + displayUsername;
+                document.getElementById('welcome-user').style.display = 'inline-block';
+                document.getElementById('login-btn').style.display = 'none';
+                document.getElementById('login-modal').style.display = 'none';
+                document.getElementById('logout-btn').style.display = 'inline-block';
+                localStorage.setItem('jobportal_username', displayUsername);
+                // Show success modal
+                document.getElementById('success-modal-message').textContent = 'Successfully signed in';
+                document.getElementById('success-modal').style.display = 'flex';
+                const closeModal = () => { document.getElementById('success-modal').style.display = 'none'; };
+                const timeout = setTimeout(closeModal, 2000);
+                document.getElementById('close-success-modal').onclick = function() { closeModal(); clearTimeout(timeout); };
+            } catch (err) {
+                usernameError.textContent = 'Login failed. Please try again.';
+                usernameError.style.display = 'block';
+            }
+        };
+
+        // Filter modal functionality
+        const openFilterBtnHero = document.getElementById('open-filter-btn-hero');
+        const openFilterBtnFeatured = document.getElementById('open-filter-btn');
+        if (openFilterBtnHero) {
+            openFilterBtnHero.onclick = function() {
+                document.getElementById('filter-modal').style.display = 'flex';
+            };
+        }
+        if (openFilterBtnFeatured) {
+            openFilterBtnFeatured.onclick = function() {
+                document.getElementById('filter-modal').style.display = 'flex';
+            };
+        }
+        document.getElementById('close-filter-modal').onclick = function() {
+            document.getElementById('filter-modal').style.display = 'none';
+        };
+        document.getElementById('filter-modal').onclick = function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        };
+
+        // Enhanced filter functionality is now handled in script.js
+        // The setupFilterEventListeners() function handles all filter interactions
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Add event listener for Jobs link to ensure jobs always load and scroll
+        document.getElementById('jobs-link').addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent default anchor behavior
+            if (typeof showAllJobs === 'function') {
+                showAllJobs();
+            }
+            // Scroll to jobs section
+            const jobsSection = document.getElementById('jobs');
+            if (jobsSection) {
+                jobsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+
+        // Robust form toggling for login/register
+        document.getElementById('show-register').onclick = function(e) {
+            e.preventDefault();
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+        };
+        document.getElementById('show-login').onclick = function(e) {
+            e.preventDefault();
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+        };
+
+        // Check login status before job application
+        async function ensureLoggedIn() {
+            const res = await fetch('/api/me', { credentials: 'include' });
+            const data = await res.json();
+            if (!data.loggedIn) {
+                document.getElementById('login-modal').style.display = 'flex';
+                return false;
+            }
+            return true;
+        }
+        // Example: before applying for a job
+        window.applyForJob = async function(jobId) {
+            const loggedIn = await ensureLoggedIn();
+            if (!loggedIn) return;
+            // ... proceed with job application logic ...
+            alert('Job application submitted!');
+        };
+        // Logout function
+        window.logout = async function() {
+            try {
+                await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+                // Clear localStorage and update UI
+                localStorage.removeItem('jobportal_username');
+                const welcomeUser = document.getElementById('welcome-user');
+                const loginBtn = document.getElementById('login-btn');
+                const logoutBtn = document.getElementById('logout-btn');
+                
+                if (welcomeUser) welcomeUser.style.display = 'none';
+                if (logoutBtn) logoutBtn.style.display = 'none';
+                if (loginBtn) loginBtn.style.display = 'inline-block';
+            } catch (err) {
+                console.error('Logout error:', err);
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const username = localStorage.getItem('jobportal_username');
+            const welcomeUser = document.getElementById('welcome-user');
+            const loginBtn = document.getElementById('login-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            if (username) {
+                if (welcomeUser) {
+                    welcomeUser.textContent = 'Welcome, ' + username;
+                    welcomeUser.style.display = 'inline-block';
+                }
+                if (loginBtn) loginBtn.style.display = 'none';
+                if (logoutBtn) logoutBtn.style.display = 'inline-block';
+            }
+            if (logoutBtn) {
+                logoutBtn.onclick = function() {
+                    // Use the proper logout function
+                    window.logout();
+                };
+            }
+        });
+    </script>
+</body>
+</html> 
